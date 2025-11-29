@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +21,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/products', function () {
-    return view('products');
-});
+// Route::get('/products', function () {
+//     return view('products');
+// });
 
 Route::get('/product_details', function () {
     return view('product_details');
@@ -32,3 +36,18 @@ Route::get('/account', function () {
 Route::get('/cart', function () {
     return view('cart');
 });
+
+Route::get('/products', function () {
+    return view('checkout');
+});
+
+Route::resource('/products', ProductController::class)->only([
+    'index', 'show'
+]);
+
+Route::resource('/users', UserController::class)->only([
+    'index', 'show','store'
+]);
+
+
+Route::get('/admin_products', UserController::class.'@addProducts');
