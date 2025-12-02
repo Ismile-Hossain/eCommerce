@@ -42,12 +42,12 @@ Route::get('/products', function () {
 });
 
 Route::resource('/products', ProductController::class)->only([
-    'index', 'show'
+    'index', 'show', 'store'
 ]);
 
 Route::resource('/users', UserController::class)->only([
-    'index', 'show','store'
+    'index', 'show', 'store'
 ]);
 
 
-Route::get('/admin_products', UserController::class.'@addProducts');
+Route::get('/admin_products', [UserController::class, 'addProducts']);

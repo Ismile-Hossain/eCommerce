@@ -61,17 +61,17 @@
                         </div>
                         <form id="LoginForm" action="/users" method="GET">
                             @csrf
-                            <input type="email" name="email" placeholder="Email">
+                            <input type="text" name="email" placeholder="Email">
                             <input type="password" name="pass" placeholder="Password">
                             <button type="submit" class="btn">Login</button>
                             <a href="">Forget Password</a>
                         </form>
 
-                        <form id="RegForm" action="/users" method="POST">
+                        <form id="RegForm" action="/users" method="POST" action="/users">
                             @csrf
                             <input type="text" name="uname" placeholder="Username" required>
-                            <input type="email" name="email" placeholder="Email">
-                            <input type="text" name="mobile" placeholder="Mobile">
+                            <input type="text" name="email" placeholder="Email">
+                            <input type="text" name="mobile" placeholder="Mobile No.">
                             <input type="password" name="pass" placeholder="Password" required>
                             <button type="submit" class="btn">Register</button>
                         </form>

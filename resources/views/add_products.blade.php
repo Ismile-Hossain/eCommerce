@@ -58,7 +58,7 @@
                         <input type="text" name="name" placeholder="Product Name">
                         <input type="text" name="price" placeholder="Price">
                         <input type="text" name="amount" placeholder="Amount">
-                        <input type="file" name="image">
+                        <input type="file" name="images[]" multiple>
                         <button type="submit" class="btn">Add Product</button>
                     </form>
                 </div>
