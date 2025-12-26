@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-
-
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,12 +40,11 @@ Route::get('/products', function () {
 });
 
 Route::resource('/products', ProductController::class)->only([
-    'index', 'show', 'store'
+    'index', 'show', 'store',
 ]);
 
 Route::resource('/users', UserController::class)->only([
-    'index', 'show', 'store'
+    'index', 'show', 'store',
 ]);
 
-
-Route::get('/admin_products', [UserController::class, 'addProducts']);
+Route::get('/admin_products', [ProductController::class, 'addProducts']);

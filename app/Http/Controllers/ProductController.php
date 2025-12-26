@@ -12,8 +12,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
-        return view('products');
+        $products = Product::paginate(3);
+
+        // dd($products);
+        return view('products', compact('products'));
     }
 
     /**
@@ -29,32 +31,34 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-         $product = new Product();
-         $product->name = $request->has('name') ? $request->get('name') : '';
-         $product->price = $request->has('price') ? $request->get('price') : '';
-         $product->amount = $request->has('amount') ? $request->get('amount') : '';
-         $product->is_active = true ;
+        $product = new Product;
+        $product->name = $request->has('name') ? $request->get('name') : '';
+        $product->price = $request->has('price') ? $request->get('price') : '';
+        $product->amount = $request->has('amount') ? $request->get('amount') : '';
+        $product->is_active = true;
 
-         if($request->hasFile('images')){
-             $files = $request->file('images');
-             $imageLocation = array();
-             $i = 0;
-             foreach($files as $file){
+        if ($request->hasFile('images')) {
+            $files = $request->file('images');
+            $imageLocation = [];
+            $i = 0;
+            foreach ($files as $file) {
                 $extension = $file->getClientOriginalExtension();
-                $filename = 'product_'. time() . '_'. ++$i . '.' . $extension;
+                $filename = 'product_'.time().'_'.++$i.'.'.$extension;
                 $location = '/images/uploads/';
                 $file->move(public_path().$location, $filename);
                 $imageLocation[] = $location.$filename;
-             }
-              $product->image = implode(',', $imageLocation);
-              $product->save();
-              return back()->with('success', 'Product added successfully');
-         }else{
-            return back()->with('error', 'Product was not saved successfully');
-         }
+            }
+            $product->image = implode(',', $imageLocation);
+            $product->save();
 
-         $product->save();
-         return back()->with('success', 'Product added successfully');
+            return back()->with('success', 'Product added successfully');
+        } else {
+            return back()->with('error', 'Product was not saved successfully');
+        }
+
+        $product->save();
+
+        return back()->with('success', 'Product added successfully');
     }
 
     /**
@@ -87,5 +91,26 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    public function addProducts()
+    {
+        $products = Product::all();
+        $returnProducts = [];
+
+        foreach ($products as $product) {
+            // $images = explode('|', $product->image);
+            $images = explode(',', $product->image);
+
+            $returnProducts[] = [
+                'name' => $product->name,
+                'price' => $product->price,
+                'amount' => $product->amount,
+                'images' => $images,
+            ];
+        }
+
+        //    return compact('returnProducts');
+        return view('add_products', compact('returnProducts'));
     }
 }

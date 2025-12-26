@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -18,12 +18,11 @@ class UserController extends Controller
 
         $userInfo = User::where('email', $uName)->first();
 
-        if (isset($userInfo) && !empty($userInfo) && Hash::check($pass, $userInfo->password)) {
+        if (isset($userInfo) && ! empty($userInfo) && Hash::check($pass, $userInfo->password)) {
             return redirect('/admin_products');
         } else {
             return redirect()->back()->with('error', 'Invalid Credentials');
         }
-
 
     }
 
@@ -44,7 +43,7 @@ class UserController extends Controller
             'name' => $request->has('uname') ? $request->get('uname') : '',
             'email' => $request->has('email') ? $request->get('email') : '',
             'mobile' => $request->has('mobile') ? $request->get('mobile') : '',
-            'password' => bcrypt($request->has('pass') ? $request->get('pass') : '')
+            'password' => bcrypt($request->has('pass') ? $request->get('pass') : ''),
         ]);
 
         return redirect('/admin_products');
@@ -80,9 +79,5 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function addProducts(){
-       return view('add_products');
     }
 }
